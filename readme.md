@@ -1,5 +1,11 @@
 # Js 对称加密解密
 
+## install
+
+```
+npm install crypto-lg
+```
+
 ## Example
 
 ```
