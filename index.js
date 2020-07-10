@@ -100,7 +100,7 @@ const _mbase64Seed = (function() {
  * @param {int} num
  */
 const encode64 = function(n) {
-  n = Math.abs(n);
+  n = Math.abs(parseInt(n));
   code = 64;
 
   const stack = [n%code];
