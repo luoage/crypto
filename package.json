@@ -1,0 +1,23 @@
+{
+  "name": "crypto-lg",
+  "version": "1.0.0",
+  "description": "对称加密解密",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoage/crypto.git"
+  },
+  "keywords": [
+    "enctypt",
+    "decrypt"
+  ],
+  "author": "luoage@msn.cn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luoage/crypto/issues"
+  },
+  "homepage": "https://github.com/luoage/crypto#readme"
+}

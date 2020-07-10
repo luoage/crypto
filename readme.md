@@ -1,7 +1,6 @@
 # Js 对称加密解密
 
 ## Example
-
 ```
 const z = {
   a: 1,
@@ -38,4 +37,15 @@ for(var i =0; i<1000; i++) {
 
 }
 console.log('success');
+```
+
+## Example2
+```
+const crypto = require('./');
+
+const a = 999;
+const b = crypto.encode64(999)
+
+console.log(b);
+console.log(crypto.decode64(b));
 ```

@@ -5,12 +5,10 @@
  */
 
 /**
- * 加密
- *
  * @param string|object
  * @return string
  */
-module.exports.encrypt = function(a) {
+const encrypt = function(a) {
   a = typeof a !== 'string' ? JSON.stringify(a) : a;
 
   const b = [];
@@ -22,7 +20,7 @@ module.exports.encrypt = function(a) {
     return s.length === 1 ? '0' + s : s;
   }
 
-  const random = function(from ,to) {
+  const random = function(from, to) {
     return from + Math.floor(Math.random()*(to - from + 1));
   }
 
@@ -51,12 +49,10 @@ module.exports.encrypt = function(a) {
 };
 
 /**
- * 解密
- *
  * @param string
  * @return string
  */
-module.exports.decrypt = function(str) {
+const decrypt = function(str) {
   str = str.toLowerCase();
 
   const o = ((str.length % 2) * - 1 + 2) * - 1;
@@ -84,4 +80,63 @@ module.exports.decrypt = function(str) {
   }
 
   return b.join('');
+};
+
+const _mbase64Seed = (function() {
+  const seeds = [];
+  const letts = function(l1, l2) {
+    const seed = [];
+    for (let i = l1.charCodeAt(0); i<= l2.charCodeAt(0); i++) {
+      seed.push(String.fromCharCode(i));
+    }
+    return seed;
+  };
+  return [...letts('0', '9'), ...letts('a', 'z'), ...letts('A', 'Z'), '+', '/'];
+})();
+
+/**
+ * 64 encode
+ *
+ * @param {int} num
+ */
+const encode64 = function(n) {
+  n = Math.abs(n);
+  code = 64;
+
+  const stack = [n%code];
+  let i = 0;
+  while(i = parseInt(n/code)){
+    n = i;
+    stack.push(i%code);
+  }
+  return stack.map((i) => {
+    return _mbase64Seed[i];
+  }).reverse().join('');
+};
+
+/**
+ * encode 64 to 10
+ *
+ * @param {string}
+ */
+const decode64 = function(s) {
+  code = 64;
+
+  s = String(s).split('').reverse();
+  let n = 0;
+  for(let i = 0 ; i < s.length; i++) {
+    const at = _mbase64Seed.indexOf(String(s[i]));
+    if (at === -1) {
+      throw new Error('invalid param');
+    }
+    n += at * Math.pow(code, i);
+  }
+  return n;
+};
+
+module.exports = {
+  encrypt,
+  exports,
+  encode64,
+  decode64,
 };
