@@ -1,6 +1,6 @@
 {
   "name": "crypto-lg",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "对称加密解密, 64进制",
   "main": "index.js",
   "scripts": {
