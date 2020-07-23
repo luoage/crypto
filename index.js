@@ -134,9 +134,75 @@ const decode64 = function(s) {
   return n;
 };
 
+function encodeMess(str) {
+  str = String(str);
+  if (!str) {
+    return str;
+  }
+  const a = str.split('').reverse();
+  const b = [];
+  let i = 7;
+  const result = a.reduce((prev, curt) => {
+    i = ++i % 8;
+    if (i) {
+      b.push(((curt.charCodeAt(0) << (8-i)) | prev) & 0b11111111);
+    }
+    return curt.charCodeAt(0) >> i;
+  }, '');
+  result && b.push(result);
+
+  const x = [];
+  for(let j = 0; j<b.length; j+=2) {
+    x.push(String.fromCharCode(b[j] << 8 | (b[j+1] || 0)));
+  }
+  return x.reverse().join('');
+}
+
+function decodeMess(str) {
+  const a = str.split('').reverse();
+  const x = [];
+  const length = a.length;
+
+  for(let j = 0; j<length; j++) {
+    x.push(a[j].charCodeAt(0) >> 8);
+    const l = a[j].charCodeAt(0) & 0b11111111;
+    if (l != 0) {
+      x.push(l);
+    }
+  }
+
+  let b = [];
+  let i = 0;
+  x.reduce((prev, curt) => {
+    if (i) {
+      b.push(((curt << i) | prev) & 0b1111111);
+    } else {
+      b.push(curt & 0b1111111);
+    }
+    i = ++i % 8;
+    if (!i) {
+      i++;
+      b.push(curt & 0b1111111);
+    }
+    return curt >> 8 - i;
+  }, '');
+  if (i) {
+    const curt = x[x.length-1] >> 8-i;
+    if (curt) {
+      b.push(curt & 0b1111111);
+    }
+  }
+
+  return b.map((n) => {
+    return String.fromCharCode(n);
+  }).reverse().join('');
+}
+
 module.exports = {
   encrypt,
-  exports,
+  decrypt,
   encode64,
   decode64,
+  encodeMess,
+  decodeMess,
 };
