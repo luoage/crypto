@@ -30,8 +30,11 @@ const encrypt = function(a) {
     switch(s.length) {
       case 1:
       case 2:
-        b.push(yih(s));
-        break;
+        if (s < 128) {
+          b.push(yih(s));
+          break;
+        }
+        s = '0' + s;
       case 3:
         s = '0' + s;
       case 4:
